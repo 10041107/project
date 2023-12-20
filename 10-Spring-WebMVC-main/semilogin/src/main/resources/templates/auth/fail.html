@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script th:inline="javascript">
+    alert([[${message}]]); <!--실패시 해당하는 메세지 출력-->
+    window.location.replace("/auth/login"); <!--이 경로로 가짐-->
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Spring MVC Mapping 테스트</h1>
+    <h2>1. 메소드에 요청 매핑하기</h2>
+
+    <h3>get : /menu/regist</h3>
+    <button onclick="location.href='/menu/regist'">GET 메뉴 등록 요청 onclick="location.href 방식</button>
+
+<!--    get과 post의 차이
+        get은 보여주는 거에 사용하는 것이고
+        post는 등록 수정 삭제시 사용할수 있고
+        post는 값을 숨겨주거나 쿠키삭제등 보안에 쓰기 좋음-->
+
+    <form action="/menu/regist" method="get"> <br>
+        <button type="submit">GET 메뉴 등록 요청 method="get"방식</button>
+
+<!--        http://localhost:8080/menu/regist?
+            여기만 유일하게 링크에서 ?가 붙는 이유 : 추가적인 값이 없어서?-->
+    </form>
+    <br>
+    <form action="/menu/regist" method="post">
+        <button type="submit">GET 메뉴 등록 요청 method="post"방식</button>
+    </form>
+
+
+    <h3> Post : /menu/regist</h3>
+<!--    <button onclick="location.href='/menu/regist'">post 메뉴 등록 요청</button>-->
+    <form action="/menu/regist" method="post">
+        <button type="submit">post 메뉴 등록 요청</button>
+    </form>
+
+    <h3> GET  : /menu/modify</h3>
+    <button onclick="location.href='/menu/modify'">GET 메뉴 수정 요청</button>
+
+    <h3> Post : /menu/modify</h3>
+    <form action="/menu/modify" method="post">
+        <button type="submit">post 메뉴 수정 요청</button>
+    </form>
+
+    <h3> GET  : /menu/DElETE</h3>
+    <button onclick="location.href='/menu/delete'">GET 메뉴 삭제 요청</button>
+
+    <h3> Post : /menu/delete</h3>
+    <form action="/menu/delete" method="post">
+        <button type="submit">post 메뉴 삭제 요청</button>
+    </form>
+
+    <h2>2. 클래스에 요청 매핑하기</h2>
+    <h3> GET  : /order/regist</h3>
+    <button onclick="location.href='/order/regist'">GET 주문 등록 요청</button>
+
+    <h3> Post : /order/modify</h3>
+    <form action="/order/modify" method="post">
+        <button type="submit">post 주문 수정 요청</button>
+    </form>
+
+    <h3> post  : /order/delete</h3>
+    <form action="/order/delete" method="post">
+        <button type="submit">post 주문 삭제 요청</button>
+    </form>
+
+    <h3> get : /order/{orderNo}</h3>
+    <button onclick="location.href='/order/detail/3'">get 주문 상세보기</button>
+<!--여기 넣은 숫자의 값이 나옴
+/order/detail 이렇게 넣으면 otherRequest메서드가 실행됨-->
+</body>
+</html>
