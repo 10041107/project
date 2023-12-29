@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>회원가입</h1>
+
+<form th:action="@{/user/signup}" method="post">
+
+    <!--        이메일 입력-->
+    <label for="inputUserEmail">이메일</label>
+    <input type="text" id="inputUserEmail" name="inputUserEmail">
+
+    <button class="emailCheck" type="button" id="emailCheck"
+            onclick="fn_emailCheck();">
+        중복확인
+    </button>
+
+    <input type="text" name="userNickName" placeholder="닉네임" size="60"> <br>
+    <input type="password" name="password" placeholder="비밀번호" id="password1" size="60"> <br>
+    <input type="password" name="checkPassword" placeholder="비밀번호 확인" id="password2" size="60"> <br>
+    <input type="button" onclick="test()" value="확인하기"> <br> <!--비밀번호가 같은지 확인-->
+    <br>
+    <!--    <button  >회원가입</button> &lt;!&ndash;disabled="disabled"는 버튼 비활성화&ndash;&gt;-->
+    <button type="submit" class="btn signUpBtn" id="target_btn" disabled="disabled" >회원가입</button>
+</form>
+
+
+
+<script th:inline="javascript">
+    const message = [[${message}]];
+
+    if(message){
+        alert(message);
+    }
+</script>
+<script type="text/javascript">
+    // 이메일 중복 확인
+    function fn_emailCheck() {
+        $.ajax({
+            url : "/user/emailCheck",
+            type : "POST",
+            dataType :"JSON",
+            data : {"userEmail" : $("#inputUserEmail").val()},
+            success : function (data) {
+                if(data == 1) {
+                    alert("중복된 이메일입니다.");
+                } else if (data == 0) {
+                    $("#emailCheck").attr("value", "Y");
+                    alert("사용 가능한 이메일입니다.")
+
+                }
+            },
+            error: function (){
+                alert("에러");
+            }
+
+        })
+    }
+
+    <!--입력한 비밀번호와 입력한 비밀번호 확인이 일치할 시 회원가입 버튼이 활성화되고 그렇지 않으면 활성화가 안됨-->
+    function test(){
+        console.log("dddd")
+        var v1 = document.getElementById('password1').value; <!--password1의 값을 v1로 지정함-->
+        var v2 = document.getElementById('password2').value; <!--password2의 값을 v2로 지정함-->
+        console.log(v1, v2)
+        if(v1 != v2) { <!--v1와 v2의 값이 다르다면-->
+            alert("비밀번호가 일치하지 않습니다");
+            const target = document.getElementById('target_btn');
+            target.disabled = true; <!--버튼이 비활성화 되있는 상태에서 true라서 그대로 비활성화 되있음-->
+            return false;
+        } else {
+            alert("비밀번호가 일치합니다");
+            const target = document.getElementById('target_btn');
+            target.disabled = false; <!--버튼이 비활성화 되있는 상태에서 false로 바껴서 활성화가 됨-->
+            return true;
+        }
+    }
+    function back(){
+        history.back();
+    } <!--뒤로 가기-->
+</script>
+
+</body>
+</html>

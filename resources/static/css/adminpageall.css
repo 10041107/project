@@ -1,0 +1,116 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: margin-left .5s;
+    margin-left: 200px;
+}
+
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: #f4f4f4;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 30px;
+    transition: left .5s;
+    overflow: hidden;
+
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    color: #ddd;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+h1 {
+    color: #333;
+}
+
+table {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+    border-collapse: collapse;
+}
+
+table thead th {
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f4f4f4;
+}
+
+table tbody td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+#sidebarToggle {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    background-color: #ddd;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: left .5s;
+}
+
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* styles.css */
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* <!-- ================================== --> */
+
+.pageall{
+    
+}

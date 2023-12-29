@@ -1,0 +1,132 @@
+@import url(style.css);
+
+:root {
+    --main-color: rgb(136, 100, 78);
+    --sub-color: rgb(231,223,215);
+}
+.contents_grid {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 7rem ;
+    grid-gap: 2rem;
+}
+.grids {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.com_category {
+    background-color: var(--sub-color);
+    border-radius: 1rem;
+    position: relative;
+}
+.category_btn {
+    position: absolute;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 2rem;
+}
+.category_icon {
+    position: absolute;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    width: 80%;
+}
+.category_icon i {
+    padding: 0 1.5rem;
+}
+
+.com_tag {
+    background-color: var(--sub-color);
+    border-radius: 1rem;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.com_tag p {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    font-size: 1.2rem;
+}
+.com_tag_collection {
+    background-color: whitesmoke;
+    border-radius: 1rem;
+    width: 95%;
+    height: 65%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -35%);
+    padding: 1rem;
+}
+
+.com_list {
+    background-color: var(--sub-color);
+    border-radius: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-gap: 2rem;
+    padding: 2rem;
+}
+.com_list img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+.com_box_info {
+    position: relative;
+}
+.com_box_rate {
+    position: absolute;
+    top: 0%;
+    right: 5%;
+}
+
+
+.com_maps {
+    background-color: var(--sub-color);
+    border-radius: 1rem;
+    height: 50rem;
+}
+#map {
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 90%;
+    height: 95%;
+    position: relative;
+}
+.com_map_display {
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: 95%;
+}
+.mapBtn {
+    position: absolute;
+    width: 4rem;
+    top: 0.6rem;
+    left: 1rem;
+    padding: 0px 7px;
+    height: 30px;
+    line-height: 26px;
+    font-size: 13px;
+    letter-spacing: -1px;
+    background-color: var(--sub-color);
+    border: 1px solid black;
+    border-radius: 1rem;
+    text-align: center;
+}

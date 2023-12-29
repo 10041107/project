@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="callSettersOnNulls" value="true" /> <!--해당 메서드의 값이 null이여도 호출이 가능하게 함-->
+        <setting name="jdbcTypeForNull" value="NULL" /> <!--db에 null값을 전달할 때 jdbc타입의 null을 사용한다-->
+    </settings>
+
+
+    <mappers>
+        <mapper resource="mapper/member/member.xml" /> <!--실제 mapper 파일을 지정-->
+    </mappers>
+
+</configuration>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!-- thymeleaf 프라그먼트 -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+
+<th:block layout:fragment="content">
+  <p>여행 계획 추가</p>
+  <form action="/plan/plan_insert" method="post">
+    시작 날:<input type="text" id="startDate" name="startDate" autocomplete='off'><br>
+    마지막 날:<input type="text" id="endDate" name="endDate" autocomplete='off'><br>
+    <button type="submit">확인</button>
+  </form>
+  <button onclick="calculateDays()">일수 계산</button>
+  <p id="result"></p>
+
+
+  <div>
+    <label for="regionDropdown">지역 선택:</label>
+    <select id="regionDropdown" onchange="loadBuildings()">
+      <option value="선택" selected>선택해주세요</option>
+      <option value="서울특별시">서울특별시</option>
+      <option value="제주특별자치도">제주특별자치도</option>
+      <!-- 다른 지역 옵션들 추가 -->
+    </select>
+  </div>
+
+  <div class="planDiv" id="wholeListDiv">
+    <table>
+      <tr>
+        <th>시설 번호</th>
+        <th>시설 이름</th>
+        <th>시설 카테고리</th>
+        <th>시설 지역</th>
+      </tr>
+      <tr th:each="comp: ${companyList}">
+        <td th:text="${comp.companyCode}"></td>
+        <td th:text="${comp.companyName}"></td>
+        <td th:text="${comp.companyClassi}"></td>
+        <td th:text="${comp.companyCtprvn}"></td>
+      </tr>
+    </table>
+    <div class="paging">
+      <span th:if="${paging.page le 1}"> [이전] </span>
+      <a th:if="${paging.page > 1}" th:href="@{/plan/make_plan(page=${paging.page-1})}"> [이전] </a>
+
+      <span th:each="i : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+        <span th:if="${i eq paging.page}">
+            <b th:text="${i}"></b>
+        </span>
+        <a th:unless="${i eq paging.page}" th:href="@{/plan/make_plan(page=${i})}" th:text="${i}"></a>
+    </span>
+
+      <span th:if="${paging.page ge paging.maxPage}"> [다음] </span>
+      <a th:if="${paging.page < paging.maxPage}" th:href="@{/plan/make_plan(page=${paging.page+1})}"> [다음] </a>
+    </div>
+  </div>
+
+  <!--    <div id="facilitiesContainer">-->
+  <!--        &lt;!&ndash; AJAX로 받아온 시설 리스트가 이 부분에 동적으로 추가될 것임 &ndash;&gt;-->
+  <!--        <table>-->
+  <!--            <tr>-->
+  <!--                <th>시설 번호</th>-->
+  <!--                <th>시설 이름</th>-->
+  <!--                <th>시설 카테고리</th>-->
+  <!--                <th>시설 지역</th>-->
+  <!--            </tr>-->
+  <!--            <tr th:each="comp2: ${CompanyByCtprvn}">-->
+  <!--                <td th:text="${comp2.companyCode}"></td>-->
+  <!--                <td th:text="${comp2.companyName}"></td>-->
+  <!--                <td th:text="${comp2.companyClassi}"></td>-->
+  <!--                <td th:text="${comp2.companyCtprvn}"></td>-->
+  <!--            </tr>-->
+  <!--        </table>-->
+  <!--        <div class="paging">&ndash;&gt;-->
+  <!--            <span th:if="${paging.page le 1}"> [이전] </span>-->
+  <!--            <a th:if="${paging.page > 1}" th:href="@{/plan/make_plan(page=${paging.page-1})}"> [이전] </a>-->
+
+  <!--            <span th:each="i : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
+  <!--                    <span th:if="${i eq paging.page}">-->
+  <!--                        <b th:text="${i}"></b>-->
+  <!--                    </span>-->
+  <!--                    <a th:unless="${i eq paging.page}" th:href="@{/plan/make_plan(page=${i})}" th:text="${i}"></a>-->
+  <!--                </span>-->
+
+  <!--            <span th:if="${paging.page ge paging.maxPage}"> [다음] </span>-->
+  <!--            <a th:if="${paging.page < paging.maxPage}" th:href="@{/plan/make_plan(page=${paging.page+1})}"> [다음] </a>-->
+  <!--        </div>-->
+  <!--    </div>-->
+
+  <script>
+    $.datepicker.setDefaults({
+      dateFormat: 'yy-mm-dd',
+      prevText: '이전 달',
+      nextText: '다음 달',
+      monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+      showMonthAfterYear: true,
+      yearSuffix: '년'
+    });
+
+    $(function() {
+      // 출발일은 오늘 이상만 선택 가능
+      $("#startDate").datepicker({
+        minDate: 0
+      });
+
+      // 도착일은 출발일 이상만 선택 가능
+      $("#endDate").datepicker({
+        minDate: 0
+      });
+    })
+
+    function calculateDays() {
+      // 출발일과 도착일 입력값 가져오기
+      var startDateStr = $("#startDate").val();
+      var endDateStr = $("#endDate").val();
+
+      // Date 객체로 변환
+      var startDate = new Date(startDateStr);
+      var endDate = new Date(endDateStr);
+
+      // 두 날짜 간의 차이 계산 (밀리초로 반환)
+      var timeDiff = endDate - startDate;
+
+      // 일수로 변환 (밀리초 -> 초 -> 분 -> 시간 -> 일)
+      var daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24) + 1);
+
+      // 결과 표시
+      $("#result").text("출발일과 도착일 사이의 일수: " + daysDiff + "일");
+    }
+
+    function loadBuildings() {
+      // 선택된 지역을 가져오기
+      var regionDropdown = document.getElementById("regionDropdown");
+      var selectedRegion = regionDropdown.value;
+
+      // AJAX를 사용하여 서버에서 해당 지역의 시설 목록을 가져옴
+      $.ajax({
+        type: "GET",
+        url: "/plan/make_plan?companyCtprvn=" + selectedRegion,
+        success: function (facilities) {
+          // 시설 목록을 받아서 동적으로 화면 갱신
+          updateFacilitiesUI(facilities);
+
+          // 선택된 지역에 따라 전체 리스트를 뿌려주는 div를 보이거나 숨김
+          if (selectedRegion === "서울특별시") {
+            $("#wholeListDiv").addClass("d-none"); // 안 보이게 함
+            location.href = "/plan/make_plan?companyCtprvn=" + "서울특별시";
+          }else if(selectedRegion === "제주특별자치도"){
+            $("#wholeListDiv").addClass("d-none"); // 안 보이게 함
+            location.href = "/plan/make_plan?companyCtprvn=" + "제주특별자치도";
+          }
+          else {
+            $("#wholeListDiv").removeClass("d-none"); // 숨김
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("Error loading facilities:", error);
+        }
+      });
+      console.log(selectedRegion);
+    }
+
+    function updateFacilitiesUI(facilities) {
+      var facilitiesContainer = document.getElementById("facilitiesContainer");
+      facilitiesContainer.innerHTML = "";  // 기존 내용 비우기
+
+      // 시설 목록을 테이블 형태로 만들기
+      var table = document.createElement("table");
+      var headerRow = table.insertRow(0);
+
+      // 헤더 추가
+      var headers = ["시설 번호", "시설 이름", "시설 카테고리", "시설 지역"];
+      for (var i = 0; i < headers.length; i++) {
+        var headerCell = document.createElement("th");
+        headerCell.innerText = headers[i];
+        headerRow.appendChild(headerCell);
+      }
+
+      // 시설 목록 추가
+      for (var i = 0; i < facilities.length; i++) {
+        var facility = facilities[i];
+        var row = table.insertRow(i + 1);
+
+        var cells = [facility.companyCode, facility.companyName, facility.companyClassi, facility.companyCtprvn];
+        for (var j = 0; j < cells.length; j++) {
+          var cell = row.insertCell(j);
+          cell.innerText = cells[j];
+        }
+      }
+
+      // 테이블을 facilitiesContainer에 추가
+      facilitiesContainer.appendChild(table);
+    }
+
+  </script>
+</th:block>

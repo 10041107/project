@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 정보 수정</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- jQuery 추가 -->
+    <script th:inline="javascript">
+        $(document).ready(function() { // 페이지가 준비되면
+            $('button[type="submit"]').on('click', function(e) { // 수정 버튼이 클릭되면
+                e.preventDefault(); // 기본 동작을 막음
+                var sessionMessage = [[${session.message}]];
+                if (sessionMessage) {
+                    alert(sessionMessage);
+                    $.ajax({
+                        url: "/clearSessionMessage",
+                        type: "POST",
+                        success: function(data) {
+                            console.log("Message removed from session");
+                        }
+                    });
+                }
+                $('form').submit(); // 폼을 제출
+            });
+        });
+    </script>
+</head>
+<body>
+
+<!-- ====================== 기본설정 ======================= -->
+
+<!-- 사이드바 -->
+<div class="sidebar">
+    <ul class="category">
+        <li>유저 관리</li>
+        <li><a href="userstatus">유저 조회</a></li>
+        <li>시설 관리</li>
+        <li><a href="poststatus">시설 추가</a></li>
+        <li><a href="companystatus">시설 조회</a></li>
+        <li>업체 인증 관리</li>
+        <li><a href="certification">인증 대기중 업체</a></li>
+        <li>문의사항 관리</li>
+        <li><a href="notinquiry">문의 답변하기</a></li>
+        <li><a href="inquirystatus">문의사항 조회</a></li>
+        <li>공지사항 관리</li>
+        <li><a href="announcement">공지사항 등록</a></li>
+        <li><a href="announcestatus">공지사항 조회</a></li>
+    </ul>
+</div>
+
+<!-- 사이드바 토글 -->
+<div id="sidebarToggle"> >> </div>
+<script>
+    var sidebarToggle = document.getElementById('sidebarToggle');
+    var sidebar = document.querySelector('.sidebar');
+    var body = document.body;
+    var isSidebarVisible = true;
+
+    sidebarToggle.addEventListener('click', function() {
+        if (isSidebarVisible) {
+            sidebar.style.left = '-200px';
+            body.style.marginLeft = '100px';
+            sidebarToggle.style.left = '0';
+        } else {
+            sidebar.style.left = '0';
+            body.style.marginLeft = '200px';
+            sidebarToggle.style.left = '200px';
+        }
+        isSidebarVisible = !isSidebarVisible;
+    });
+</script>
+
+<!-- ====================== 해당 페이지 설정 ======================= -->
+
+<h1>사용자 정보 수정</h1>
+<form th:action="@{/admin/userstatus/edit/{userCode}(userCode=${user.userCode})}" method="post">
+    <!-- form fields for user information -->
+    <label for="nickname">유저 닉네임:</label>
+    <input type="text" id="nickname" name="userNickname" th:value="${user.userNickname}" />
+
+    <label for="email">유저 이메일:</label>
+    <input type="text" id="email" name="userEmail" th:value="${user.userEmail}" />
+
+    <label for="password">유저 비밀번호:</label>
+    <input type="password" id="password" name="userPassword" th:value="${user.userPassword}" />
+
+    <label for="status">유저 상태:</label>
+    <input type="text" id="status" name="userStatus" th:value="${user.userStatus}" />
+
+    <label for="auth">유저 권한:</label>
+    <input type="text" id="auth" name="userAuth" th:value="${user.userAuth}" />
+
+    <label for="petCodeList">애완견 목록:</label>
+    <input type="text" id="petCodeList" name="petCodeList" th:value="${user.petCodeList}" />
+
+    <label for="companyCodeList">업체 좋아요 목록:</label>
+    <input type="text" id="companyCodeList" name="companyCodeList" th:value="${user.companyCodeList}" />
+
+    <input type="hidden" name="_method" value="POST">
+    <button type="submit">수정완료</button>
+</form>
+
+
+
+</body>
+</html>
+
+

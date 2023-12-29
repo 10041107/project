@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headerFragment">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 구글 아이콘 -->
+    <script src="https://kit.fontawesome.com/e8f09b5de5.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 부트스트랩 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- 메인 css -->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <!-- 메인 js-->
+    <script defer th:src="@{/js/main.js}"></script>
+
+    <!-- plan css -->
+    <link rel="stylesheet" th:href="@{/css/comInfo.css}" />
+    <!-- plan js -->
+
+
+    <script defer src="/js/comInfo.js"></script>
+
+    <!-- 유저 css-->
+    <link rel="stylesheet" href="/css/jihoCss.css">
+
+    <!-- 계획표 페이지 -->
+    <link rel="stylesheet" href="/css/plan.css">
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/datepicker.css" />
+
+    <script defer src="/js/main.js"></script>
+
+    <title>Semi Project Main Page</title>
+  </head>
+
+  <header id="header_bar">
+    <nav id="nav_bar">
+      <div class="main_title">
+        <a th:href="@{/}"><i class="fa-solid fa-dog"></i> PetTales</a>
+      </div>
+      <div class="main_menus">
+        <div class="main_menu"><a th:href="@{/}">Home</a></div>
+        <div class="main_menu"><a th:href="@{/comInfo}">Start</a></div>
+        <div class="main_menu"><a th:href="@{/plan/make_plan}">Support</a></div>
+        <div class="main_menu"><a href="#">Contact Us</a></div>
+      </div>
+      <div class="main_mypage">
+        <a href="#"><i class="fa-solid fa-user" style="color: #ffffff;"></i></a>
+      </div>
+    </nav>
+  </header>
+</th:block>
+</html>

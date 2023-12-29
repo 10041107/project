@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/auth/login}" th:method="POST">
+    <label>이메일 : </label>
+    <input type="email" id="user" name="user"/>
+    <br>
+    <label>비밀번호 : </label>
+    <input type="password" id="pass" name="pass"/>
+    <br>
+    <button>로그인</button>
+    <a href="/oauth2/authorization/google">구글 로그인</a>
+</form>
+</body>
+</html>

@@ -1,0 +1,8 @@
+.paging {
+    display: flex;
+    align-items: center;
+}
+
+.paging a {
+    padding: 0 5px;  /* 링크의 좌우 패딩 조절 */
+}

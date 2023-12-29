@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- thymeleaf 프라그먼트 -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+  <div class="loginLogo"><h1>비밀번호 찾기</h1></div>
+  <div class="emailDiv">
+    <!-- 이메일 로고, 이메일 계정 입력칸 -->
+    <img th:src="@{/image/userImgs/envelope-solid.svg}" height="30px" width="30px" class="emailLogo"><input type="text" name="email" placeholder="이메일" size="60">
+  </div>
+  <div class="passwordDiv">
+    <!-- 열쇠 로고, 이메일로 전달받은 인증번호를 받을 칸 -->
+    <img th:src="@{/image/userImgs/key-solid.svg}" height="30px" width="30px" class="emailLogo"><input type="password" name="password" placeholder="인증번호" size="60">
+  </div>
+
+  <div class="dupliCheckDiv">
+    <!-- 만약 이메일이 전송된다면 removeClass로 d-none 제거 (불편하면 편한대로 수정해도 괜찮을 듯?) -->
+    <small class="d-none availableMail">메일이 전송되었습니다.</small>
+  </div>
+
+  <div class="findPassDiv">
+    <!-- submit으로 전송 -->
+    <button type="submit" class="btn findPassBtn">확인</button>
+  </div>
+</th:block>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/adminpageall.css">
+
+    <!-- 삭제하시겠습니까? 스크립트 출력문-->
+    <script>
+        function confirmDelete(formElement) {
+            var userNickname = formElement.querySelector('button').getAttribute('data-user-nickname');
+            return confirm(userNickname + " 사용자를 삭제하시겠습니까?");
+        }
+    </script>
+    <!-- 성공 메시지가 있을 때 JavaScript를 통해 alert 표시 -->
+    <script th:if="${successMessage}" th:inline="javascript">
+        alert([[${successMessage}]]);
+    </script>
+
+</head>
+    <body>
+
+    <!-- ====================== 기본설정 ======================= -->
+
+    <!-- 사이드바 -->
+    <div class="sidebar">
+        <ul class="category">
+            <li>유저 관리</li>
+            <li><a href="userstatus">유저 조회</a></li>
+            <li>시설 관리</li>
+            <li><a href="poststatus">시설 추가</a></li>
+            <li><a href="companystatus">시설 조회</a></li>
+            <li>업체 인증 관리</li>
+            <li><a href="certification">인증 대기중 업체</a></li>
+            <li>문의사항 관리</li>
+            <li><a href="notinquiry">문의 답변하기</a></li>
+            <li><a href="inquirystatus">문의사항 조회</a></li>
+            <li>공지사항 관리</li>
+            <li><a href="announcement">공지사항 등록</a></li>
+            <li><a href="announcestatus">공지사항 조회</a></li>
+        </ul>
+    </div>
+
+    <!-- 사이드바 토글 -->
+    <div id="sidebarToggle"> >> </div>
+    <script>
+        var sidebarToggle = document.getElementById('sidebarToggle');
+        var sidebar = document.querySelector('.sidebar');
+        var body = document.body;
+        var isSidebarVisible = true;
+
+        sidebarToggle.addEventListener('click', function() {
+            if (isSidebarVisible) {
+                sidebar.style.left = '-200px';
+                body.style.marginLeft = '100px';
+                sidebarToggle.style.left = '0';
+            } else {
+                sidebar.style.left = '0';
+                body.style.marginLeft = '200px';
+                sidebarToggle.style.left = '200px';
+            }
+            isSidebarVisible = !isSidebarVisible;
+        });
+    </script>
+
+    <!-- ====================== 해당 페이지 설정 ======================= -->
+
+    <h1>사용자 검색 결과</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>유저 코드</th>
+                    <th>유저 닉네임</th>
+                    <th>유저 이메일</th>
+                    <th>유저 상태</th>
+                    <th>유저 권한</th>
+                    <th>애완견 목록</th>
+                    <th>업체 좋아요 목록</th>
+                    <th>유저 등록 날짜</th>
+                    <th>유저 수정 날짜</th>
+                    <th>수정</th> <!-- 수정 버튼 헤더 추가 -->
+                    <th>삭제</th> <!-- 삭제 버튼 헤더 추가 -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <!-- 사용자 정보 -->
+                    <td th:text="${user.userCode}"></td>
+                    <td th:text="${user.userNickname}"></td>
+                    <td th:text="${user.userEmail}"></td>
+                    <td th:text="${user.userStatus}"></td>
+                    <td th:text="${user.userAuth}"></td>
+                    <td th:text="${user.petCodeList}"></td>
+                    <td th:text="${user.companyCodeList}"></td>
+                    <td th:text="${#dates.format(user.registDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${#dates.format(user.updateDate, 'yyyy-MM-dd')}"></td>
+
+                    <!-- 수정 링크 -->
+                    <td>
+                        <a th:href="@{/admin/userstatus/edit/{userCode}(userCode=${user.userCode})}">수정</a>
+                    </td>
+
+                    <!-- 삭제 버튼 -->
+                    <td>
+                        <form th:action="@{/admin/userstatus/delete/{userCode}(userCode=${user.userCode})}" method="post" onsubmit="return confirmDelete(this);">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" th:attr="data-user-nickname=${user.userNickname}">삭제</button>
+                        </form>
+                    </td>
+
+                </tr>
+                <tr th:if="${users.isEmpty()}">
+                    <td colspan="9">검색 결과가 없습니다.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 검색 폼 -->
+        <form action="/admin/userstatus/search" method="get">
+            <input type="text" name="keyword" placeholder="검색..." required>
+            <button type="submit">검색</button>
+        </form>
+
+        <!-- 돌아가기 버튼 -->
+        <a href="/admin/userstatus">전체 사용자 목록으로 돌아가기</a>
+
+
+
+    </body>
+</html>
