@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>single File 업로드 하기</h3>
+    <form action="single-file" method="post" enctype="multipart/form-data">
+<!--        enctype: 파일을 전송할때 타입을 지정해줌
+multipart/form-data: 파일 객체를 전달함-->
+        파일 : <input type="file" name="singleFile"/> <br>
+        파일 설명 : <input type="text" name="singleFileDescription"> <br>
+        <button>전송</button>
+    </form>
+
+    <h3>MultiFile 업로드</h3>
+    <form action="multi-file" method="post" enctype="multipart/form-data">
+        파일 : <input type="file" name="multipartFiles" multiple/> <br>
+<!--        multiple은 파일선택에서 다수선택이 가능하게끔 해주는 것-->
+        파일 설명 : <input type="text" name="multiFilesDescription"/> <br>
+        <button>전송</button>
+    </form>
+</body>
+</html>

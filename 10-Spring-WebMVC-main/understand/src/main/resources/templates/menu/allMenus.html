@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <section>
+        <h3>메뉴판</h3>
+    </section>
+    <table>
+        <tr>
+            <th>메뉴 번호</th>
+            <th>메뉴 이름</th>
+            <th>메뉴 가격</th>
+            <th>카테고리 코드</th>
+            <th>상태</th>
+        </tr>
+        <tr th:each="menu:${menus}">
+            <td th:text="${menu.code}"></td>
+            <td th:text="${menu.name}"></td>
+            <td th:text="${menu.price}"></td>
+            <td th:text="${menu.categoryCode}"></td>
+            <td th:text="${menu.status}"></td>
+<!--            menus로 안쓰고 menu로 쓴 이유 데이터가 몇개가 있는지 몰라서 each문으로 하나씩 가져와야됨-->
+        </tr>
+    </table>
+</body>
+</html>

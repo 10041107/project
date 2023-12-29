@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+    <div class="loginLogo"><h1>회원가입</h1></div>
+    <form action="" method="post">
+        <div class="signUpEmailDiv">
+            <img th:src="@{/image/userImgs/envelope-solid.svg}" class="emailLogo">
+            <input type="email" name="userEmail" placeholder="이메일" size="60">
+            <button class="mailDupliCheckBtn">중복 확인</button>
+        </div>
+
+        <div class="dupliCheckDiv">
+            <small class="d-none dupliMail">중복된 이메일입니다</small>
+            <small class="d-none availableMail">사용 가능한 이메일입니다.</small>
+        </div>
+        <div class="nicknameDiv">
+            <img th:src="@{/image/userImgs/user-solid.svg}" class="userLogo">
+            <input type="text" name="userNickName" placeholder="닉네임" size="60">
+            <button class="nicknameDupliCheckBtn">중복 확인</button>
+        </div>
+        <div class="dupliCheckDiv">
+            <small class="d-none dupliNickname">중복된 닉네임</small>
+            <small class="d-none availableNickname">사용 가능한 닉네임입니다.</small>
+        </div>
+        <div class="passwordDiv">
+            <img th:src="@{/image/userImgs/lock-solid.svg}" height="30px" width="30px" class="emailLogo">
+            <input type="password" name="password" placeholder="비밀번호" id="password1" size="60">
+        </div>
+        <div class="passwordDiv">
+            <img th:src="@{/image/userImgs/lock-solid_light.svg}" height="30px" width="30px" class="emailLogo">
+            <input type="password" name="checkPassword" placeholder="비밀번호 확인" id="password2" size="60">
+            <input type="button" onclick="test()" value="확인하기"> <br> <!--비밀번호가 같은지 확인-->
+        </div>
+
+<!--    권한 :-->
+<!--    <select name="auth">-->
+<!--        <option value="USER">일반회원</option>-->
+<!--        <option value="ADMIN">관리자</option>-->
+<!--    </select>-->
+<!--    <br>-->
+
+<!--    펫코드 : <input type="number" name="petCode"/> <br>-->
+<!--    <button  >회원가입</button> &lt;!&ndash;disabled="disabled"는 버튼 비활성화&ndash;&gt;-->
+        <div class="signUpBtnDiv">
+            <button type="submit" class="btn signUpBtn" id="target_btn" disabled="disabled" >회원가입</button>
+        </div>
+</form>
+</th:block>
+<!--<button onclick="back()">취소</button>-->
+<script th:inline="javascript">
+    const message = [[${message}]];
+    if(message){
+        alert(message);
+    }
+</script>
+<script type="text/javascript">
+    function test(){
+        console.log("dddd")
+        var v1 = document.getElementById('password1').value; <!--password1의 값을 v1로 지정함-->
+        var v2 = document.getElementById('password2').value; <!--password2의 값을 v2로 지정함-->
+        console.log(v1, v2)
+        if(v1 != v2) { <!--v1와 v2의 값이 다르다면-->
+            alert("비밀번호가 일치하지 않습니다");
+            const target = document.getElementById('target_btn');
+            target.disabled = true; <!--버튼이 비활성화 되있는 상태에서 true라서 그대로 비활성화 되있음-->
+            return false;
+        } else {
+            alert("비밀번호가 일치합니다");
+            const target = document.getElementById('target_btn');
+            target.disabled = false; <!--버튼이 비활성화 되있는 상태에서 false로 바껴서 활성화가 됨-->
+            return true;
+        }
+    }
+    function back(){
+        history.back();
+    } <!--뒤로 가기-->
+
+</script>
+</html>
